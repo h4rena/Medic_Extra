@@ -1,12 +1,15 @@
 package main.java.medic.controllers;
 
+import java.sql.SQLException;
+
 import main.java.annotation.FWController;
 import main.java.annotation.RequireAuth;
 import main.java.annotation.UrlMapping;
+import main.java.medic.model.Utilisateur;
+import main.java.medic.service.UtilisateurService;
 import main.java.model.ModelAndView;
 import main.java.model.Session;
 import main.java.utils.Database;
-import main.java.utils.RoleConfig;
 
 @FWController
 public class HomeController {
@@ -41,10 +44,19 @@ public class HomeController {
     }
 
     @UrlMapping(value = "/login", method = "POST")
-    public String login(String user) {
-        getSession().set("user", user);
-        getSession().set("role", RoleConfig.rolePour(user));
-        return "connecte = " + user + " (role = " + getSession().get("role") + ")";
+    public String login(String login, String mot_de_passe) throws SQLException {
+        getSession().clear();
+        Utilisateur u = new UtilisateurService(getDb()).authentifier(login, mot_de_passe);
+        if (u == null) {
+            return "login ou mot de passe incorrect";
+        }
+        String roleEffectif = "patient".equals(u.getRole()) ? "patient" : "admin";
+        getSession().set("user", u.getLogin());
+        getSession().set("role", roleEffectif);
+        getSession().set("roleDb", u.getRole());
+        getSession().set("id_medecin", u.getId_medecin());
+        getSession().set("id_patient", u.getId_patient());
+        return "connecte = " + u.getLogin() + " (role = " + roleEffectif + ", role DB = " + u.getRole() + ")";
     }
 
     @UrlMapping(value = "/logout", method = "GET")
@@ -56,12 +68,13 @@ public class HomeController {
     @UrlMapping(value = "/profil", method = "GET")
     @RequireAuth
     public String profil() {
-        return "user en session = " + getSession().get("user");
+        return "user en session = " + getSession().get("user")
+                + " (role DB = " + getSession().get("roleDb") + ")";
     }
 
     @UrlMapping(value = "/admin", method = "GET")
     @RequireAuth(role = "admin")
     public String admin() {
-        return "espace admin de " + getSession().get("user");
+        return "espace admin/medecin de " + getSession().get("user");
     }
 }

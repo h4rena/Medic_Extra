@@ -6,10 +6,6 @@
         <param-value>main.java.medic.controllers</param-value>
     </context-param>
     <context-param>
-        <param-name>user-roles</param-name>
-        <param-value>admin:admin,user:user</param-value>
-    </context-param>
-    <context-param>
         <param-name>db.driver</param-name>
         <param-value>org.postgresql.Driver</param-value>
     </context-param>
@@ -30,6 +26,15 @@
         <listener-class>main.java.utils.AppListener</listener-class>
     </listener>
 
+    <filter>
+        <filter-name>SessionFilter</filter-name>
+        <filter-class>main.java.medic.filter.SessionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SessionFilter</filter-name>
+        <url-pattern>/url/*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>MedicServlet</servlet-name>
         <servlet-class>main.java.medic.MedicServlet</servlet-class>
@@ -39,4 +44,8 @@
         <servlet-name>MedicServlet</servlet-name>
         <url-pattern>/url/*</url-pattern>
     </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>login.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

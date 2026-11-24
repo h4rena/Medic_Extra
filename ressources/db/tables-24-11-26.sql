@@ -27,3 +27,14 @@ CREATE TABLE utilisateur (
     id_medecin VARCHAR(50) REFERENCES medecin(id_medecin),
     id_patient VARCHAR(50) REFERENCES patient(id_patient)
 );
+
+INSERT INTO medecin(nom, prenom) VALUES ('Martin', 'Claire');
+
+INSERT INTO utilisateur(login, mot_de_passe, role)
+VALUES ('admin', 'admin', 'admin');
+
+INSERT INTO utilisateur(login, mot_de_passe, role, id_medecin)
+SELECT 'medecin', 'medecin', 'medecin', id_medecin
+FROM medecin
+ORDER BY id_medecin
+LIMIT 1;
