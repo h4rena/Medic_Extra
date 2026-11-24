@@ -1,0 +1,42 @@
+<web-app xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd" version="5.0">
+    <display-name>Medic</display-name>
+
+    <context-param>
+        <param-name>controllers-package</param-name>
+        <param-value>main.java.medic.controllers</param-value>
+    </context-param>
+    <context-param>
+        <param-name>user-roles</param-name>
+        <param-value>admin:admin,user:user</param-value>
+    </context-param>
+    <context-param>
+        <param-name>db.driver</param-name>
+        <param-value>org.postgresql.Driver</param-value>
+    </context-param>
+    <context-param>
+        <param-name>db.url</param-name>
+        <param-value>jdbc:postgresql://localhost:5432/medicextra</param-value>
+    </context-param>
+    <context-param>
+        <param-name>db.user</param-name>
+        <param-value>postgres</param-value>
+    </context-param>
+    <context-param>
+        <param-name>db.password</param-name>
+        <param-value>3958</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>main.java.utils.AppListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>MedicServlet</servlet-name>
+        <servlet-class>main.java.medic.MedicServlet</servlet-class>
+        <multipart-config/>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MedicServlet</servlet-name>
+        <url-pattern>/url/*</url-pattern>
+    </servlet-mapping>
+</web-app>

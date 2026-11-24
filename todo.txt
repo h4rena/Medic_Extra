@@ -1,0 +1,117 @@
+Antécédent medical 
+Systeme afahan ny medecin mi prescrire ordonance sns ...
+
+Le patient omena identifiant unique 
+(Asina qr code associé aminy ) 
+
+Le qr code :
+
+Url de passena amke url identifiant 
+
+Tsy java iny fa php 
+De iny miantso web service any am java oe omeo ana ny momban ty olona ty
+
+
+Asina sécurisation 
+Tsy olona reetra no omena iny 
+
+
+Ny atao oe :
+Raha ao amke java izy no miditra de ao izy no maita anle olona reetra 
+
+
+Refa mapiditra a le symptôme 
+
+Raha vitan ny manambotra modele ana prédiction : oe manome symptome izy 
+De mi propose le système oe peut etre turerculose
+
+(ZAY LO LE FIAFARANY FA TSY VOTERY TODE ATAO DAOLY)
+
+Délai : Fin S6
+
+
+Sprint 1
+
+Tables patient fotsn lo
+
+MVC tsotra
+
+Patient ( id (système) 
+
+Tode asina architecture microservice 
+
+Microservice : zarazaraina le fonctionnalités ngeza be de lasa manana 
+Bundle (deployable (war) maromaro tsina ) mifapiresaka par api (mety tsy mitovy base , mety tsy mitovy langage
+
+Mety oe tsara da tsy ny zavatra reetra no atao microservice
+
+Monolithique : bundle 1  deployena (ex : war ,)
+Ao anatiny daoly ny zvaatra reetra 
+
+Tsy mety io amle projet fa raha tsy mazaka montee en charge (clustering) 
+Satri ohatra module 1 iany no mba tina apekarina ny montee en charge 
+
+
+Sprint 2 
+
+Finalite : reliena am QR code le patient :
+
+De alef aany am base php 
+
+url?id=
+
+Manao programme autonomme :
+
+Mijery anle base de refa mbola tsy misy qr code le patient anaty base de mi generer qr code jpec relie amle patient 
+
+Manao répertoire 1 anasina ny dossiers an patient reetra 
+
+id_patient/
+QrCode 
+
+
+Tsy alefa tomcat iny fa atao mode CDN
+
+CDN : content delivery network 
+(Zavatra tokana miservir fotsn izy : sary , css , js ,... 
+Pratique efa ela oe tsy anaty appli ny assets fa service tiers no mi fournir azy )
+Ex: Cloudflare , bedebe 
+
+
+
+Bon le atao :
+Crud ,
+
+Programme autonomne Main.java (manisy courche service sy repository mety oe Spring) : maka ny ao anaty patients(select *)  
+de miverifier any amle répertoire, de ra tsisy de mamorona qr code par rapport a le URL mi pointe any am PHP (a implementer plis tard):localhost:8080/patients/PAT0001 (variable daoly zany afaka configurena IP, port sns ) 
+(Le répertoire afaka definissena ko oe atao aiza , inn ny anarany  )
+
+De mi configurer apache manao virtualhost
+
+
+Reexplication :
+
+Efa manana backend tsika : 
+PatientController :
+Efa misy crud
+
+Misy getAll() (@WebApi) 
+
+De aveo manambotra anle autonomme : (Springboot):
+- Recupere patients reetra (miantso anle webapi io) , pour chaque patient , migenerer QR code , sauvegarde anle sary 
+Par defaut :
+
+
+Midy apache mitotona eto ny virtualhost any:
+/usr/local/cdn/patient/[id]/qrcode/[id]_qrcode.jpeg
+
+Am apache azo mi livre domaines samihafa (domaine = dossier)
+
+REWRITE URL : 
+
+Le patient mety manana docs hafa ao anatydossier patient
+
+Le contenu  anle qr code :
+https://[localhost]:7777/patients/[id]
+
+Le php ndray aveo miantso getPatientById en webapi amle java atsika

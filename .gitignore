@@ -1,0 +1,19 @@
+# Sortie de build
+build/
+sources.txt
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+uploads/*
